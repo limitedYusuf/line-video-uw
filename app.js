@@ -121,7 +121,16 @@ new Vue({
       this.lineCanvas.addEventListener('mouseleave', this.handleMouseUp);
     },
     previewVideo() {
-      this.videoLink = this.videoLinkInput;
+      if (this.videoLinkInput.startsWith('http://')) {
+        if (confirm("Anda menggunakan tautan HTTP yang tidak aman. Apakah Anda yakin ingin melanjutkan?")) {
+          this.videoLink = this.videoLinkInput;
+        }
+      } else if (this.videoLinkInput.startsWith('https://')) {
+        this.videoLink = this.videoLinkInput;
+      } else {
+        alert("Masukkan tautan video yang valid dengan http:// atau https://");
+      }
+
       this.$nextTick(() => {
         this.setupCanvas();
       });
